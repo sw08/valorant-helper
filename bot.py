@@ -97,6 +97,11 @@ async def choiceTeam(ctx: discord.ApplicationContext, 팀원수: Option(int, "A�
     embed.add_field(name='B팀', value=', '.join(['<@' + str(i) + '>' for i in a]), inline=False)
     await ctx.respond(embed=embed)
 
+@bot.slash_command(name='모드뽑기')
+async def randommap(ctx: discord.ApplicationContext):
+    embed = discord.Embed(title='모드 뽑기 결과', description='**' + random.choice('일반전/경쟁전/스파이크 돌격/신속플레이/데스매치/팀 데스매치/에스컬레이션'.split('/')) + '**', color=0x00ffff, timestamp=datetime.datetime.now())
+    await ctx.respond(embed=embed)
+
 class GunCategoryView(discord.ui.View):
     @discord.ui.select(
         placeholder='총 종류',
