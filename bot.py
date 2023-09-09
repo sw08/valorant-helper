@@ -18,6 +18,26 @@ mapimgs = {
     '프랙처': 'https://cdn.discordapp.com/attachments/836864790294298654/1147845539891781763/793aad2477894df4.webp',
     '헤이븐': 'https://cdn.discordapp.com/attachments/836864790294298654/1147845540336369684/60f40e9053aa8904.webp'
 }
+gunimgs = {
+    '오딘': 'https://cdn.discordapp.com/attachments/836864790294298654/1150064025556754544/f40f9f4cfb6ba714.webp',
+    '아레스': 'https://cdn.discordapp.com/attachments/836864790294298654/1150064025879724062/444f0fd3628b093b.webp',
+    '오퍼레이터': 'https://cdn.discordapp.com/attachments/836864790294298654/1150064026122977393/202698ea90306ecf.webp',
+    '마샬': 'https://cdn.discordapp.com/attachments/836864790294298654/1150064026378838026/94eeec87dd1a4f96.webp',
+    '팬텀': 'https://cdn.discordapp.com/attachments/836864790294298654/1150064026647281674/1eb1c69368ca75f0.webp',
+    '밴달': 'https://cdn.discordapp.com/attachments/836864790294298654/1150064026966032454/bf3d6bc12ab1631e.webp',
+    '가디언': 'https://cdn.discordapp.com/attachments/836864790294298654/1150064027205116037/ac6b950adce7b907.webp',
+    '불독': 'https://cdn.discordapp.com/attachments/836864790294298654/1150064027528085677/4ae45b6079a661bf.webp',
+    '저지': 'https://cdn.discordapp.com/attachments/836864790294298654/1150064027767144509/a056f63266d7e815.webp',
+    '버키': 'https://cdn.discordapp.com/attachments/836864790294298654/1150064027985256589/9540a32b0fd8ae8d.webp',
+    '스펙터': 'https://cdn.discordapp.com/attachments/836864790294298654/1150064090056761404/fef2c503f13e2303.webp',
+    '스팅어': 'https://cdn.discordapp.com/attachments/836864790294298654/1150064090589450320/3f45d7b4e40c5d44.webp',
+    '셰리프': 'https://cdn.discordapp.com/attachments/836864790294298654/1150064091151466636/6cf27cb5c0170958.webp',
+    '고스트': 'https://cdn.discordapp.com/attachments/836864790294298654/1150064091470241922/227d305cf85a0186.webp',
+    '프렌지': 'https://cdn.discordapp.com/attachments/836864790294298654/1150064091830943744/ffccf92973e1cf3a.webp',
+    '쇼티': 'https://cdn.discordapp.com/attachments/836864790294298654/1150064092170690580/5dd5806631cf8670.webp',
+    '클래식': 'https://cdn.discordapp.com/attachments/836864790294298654/1150064092464304188/593b7f4f53d2d82c.webp',
+    '칼': 'https://cdn.discordapp.com/attachments/836864790294298654/1150064092728533012/4f75a4d3e1026449.webp' 
+}
 
 mapsgroup = bot.create_group('맵', '맵 뽑기 관련 명령어')
 maps = '스플릿/바인드/헤이븐/어센트/아이스박스/브리즈/프랙처/펄/로터스/선셋'.split('/')
@@ -77,6 +97,42 @@ async def choiceTeam(ctx: discord.ApplicationContext, 팀원수: Option(int, "A�
     embed.add_field(name='B팀', value=', '.join(['<@' + str(i) + '>' for i in a]), inline=False)
     await ctx.respond(embed=embed)
 
+class GunCategoryView(discord.ui.View):
+    @discord.ui.select(
+        placeholder='총 종류',
+        min_values=1,
+        max_values=1,
+        options=[
+            discord.SelectOption(
+                label='보조 무기',
+                description='권총들+칼'
+            ),
+            discord.SelectOption(
+                label='주 무기',
+                description='권총 빼고 나머지+칼'
+            ),
+            discord.SelectOption(
+                label='모두',
+                description='모든 무기'
+            )
+        ]
+    )
+    async def select_callback(self, select, interaction):
+        mode = select.values[0]
+        guns = ['칼']
+        if mode == '보조 무기' or mode == '모두':
+            guns.extend('클래식/쇼티/프렌지/고스트/셰리프'.split('/'))
+        if mode == '주 무기' or mode == '모두':
+            guns.extend('스팅어/스펙터/버키/저지/불독/가디언/팬텀/밴달/마샬/오퍼레이터/아레스/오딘'.split('/'))
+        gun = random.choice(guns)
+        embed = discord.Embed(title='총 뽑기 결과', description='**' + gun + '**', color=0x00ffff, timestamp=datetime.datetime.now())
+        embed.set_image(url=gunimgs[gun])
+        await interaction.response.send_message(embed=embed)
+        
+@bot.slash_command(name='총뽑기')
+async def choiceGun(ctx: discord.ApplicationContext):
+    await ctx.respond(view=GunCategoryView())
+
 def insert_returns(body):
     # insert return stmt if the last expression is a expression statement
     if isinstance(body[-1], ast.Expr):
@@ -132,4 +188,4 @@ async def evalfn(ctx: discord.ApplicationContext):
     modal.setctx(ctx)
     await ctx.send_modal(modal)
 
-bot.run("MTAyNzgwODA0MTY2OTc3NTM2Mg.GGuk9y.pOWXMMFg4LAtucj90rG2AogpZOyh7oHN8M-0VE")
+bot.run(open('token.txt').read())
