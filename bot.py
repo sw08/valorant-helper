@@ -103,6 +103,8 @@ async def randommap(ctx: discord.ApplicationContext):
     await ctx.respond(embed=embed)
 
 class GunCategoryView(discord.ui.View):
+    def __init__(self, ctx):
+        self.ctx = ctx
     @discord.ui.select(
         placeholder='총 종류',
         min_values=1,
@@ -123,6 +125,7 @@ class GunCategoryView(discord.ui.View):
         ]
     )
     async def select_callback(self, select, interaction):
+        if interaction.user.id != self.ctx.author: return
         mode = select.values[0]
         guns = ['칼']
         if mode == '보조 무기' or mode == '모두':
@@ -136,7 +139,7 @@ class GunCategoryView(discord.ui.View):
         
 @bot.slash_command(name='총뽑기')
 async def choiceGun(ctx: discord.ApplicationContext):
-    await ctx.respond(view=GunCategoryView())
+    await ctx.respond(view=GunCategoryView(ctx))
 
 def insert_returns(body):
     # insert return stmt if the last expression is a expression statement
