@@ -136,7 +136,8 @@ class GunCategoryView(discord.ui.View):
         gun = random.choice(guns)
         embed = discord.Embed(title='총 뽑기 결과', description='**' + gun + '**', color=0x00ffff, timestamp=datetime.datetime.now())
         embed.set_image(url=gunimgs[gun])
-        await interaction.response.send_message(embed=embed)
+        await interaction.message.edit(embed=embed, view=None)
+        
         
 @bot.slash_command(name='총뽑기')
 async def choiceGun(ctx: discord.ApplicationContext):
