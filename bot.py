@@ -104,6 +104,7 @@ async def randommap(ctx: discord.ApplicationContext):
 
 class GunCategoryView(discord.ui.View):
     def __init__(self, ctx):
+        super().__init__()
         self.ctx = ctx
     @discord.ui.select(
         placeholder='총 종류',
