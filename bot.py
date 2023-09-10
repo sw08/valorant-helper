@@ -126,7 +126,7 @@ class GunCategoryView(discord.ui.View):
         ]
     )
     async def select_callback(self, select, interaction):
-        if interaction.user.id != self.ctx.author: return
+        if interaction.user.id != self.ctx.author.id: return
         mode = select.values[0]
         guns = ['칼']
         if mode == '보조 무기' or mode == '모두':
