@@ -6,6 +6,13 @@ import datetime
 from discord.commands import Option
 
 bot = discord.Bot(intents=discord.Intents.all(), owner_id=1015942852582326292)
+
+roleemojis = [
+    '<:initiator:1151527934734114867>', # 척후대
+    '<:duelist:1151527979646713918>', # 타격대
+    '<:sentinel:1151527983039910008>', # 감시자
+    '<:controller:1151527985170612264>'  # 전략가
+]
 mapimgs = {
     '로터스': 'https://cdn.discordapp.com/attachments/836864790294298654/1147845536309846106/687ccd6f515be17b.webp',
     '바인드': 'https://cdn.discordapp.com/attachments/836864790294298654/1147845536553107467/56c737a20d17c431.webp',
@@ -38,14 +45,131 @@ gunimgs = {
     '클래식': 'https://cdn.discordapp.com/attachments/836864790294298654/1150064092464304188/593b7f4f53d2d82c.webp',
     '칼': 'https://cdn.discordapp.com/attachments/836864790294298654/1150064092728533012/4f75a4d3e1026449.webp' 
 }
-
-mapsgroup = bot.create_group('맵', '맵 뽑기 관련 명령어')
-maps = '스플릿/바인드/헤이븐/어센트/아이스박스/브리즈/프랙처/펄/로터스/선셋'.split('/')
+agentimgs = {
+    '아스트라': 'https://cdn.discordapp.com/attachments/836864790294298654/1151524595795513445/db3c9d9b11664522.webp',
+    '바이퍼': 'https://cdn.discordapp.com/attachments/836864790294298654/1151524596168798208/059836713363a75b.webp',
+    '케이오': 'https://cdn.discordapp.com/attachments/836864790294298654/1151524596470792222/c8bc0291dfff8843.webp',
+    '사이퍼': 'https://cdn.discordapp.com/attachments/836864790294298654/1151524596756008970/8ac03789c94bd388.webp',
+    '게코': 'https://cdn.discordapp.com/attachments/836864790294298654/1151524597045407754/5cf9a40477fdef2e.webp',
+    '세이지': 'https://cdn.discordapp.com/attachments/836864790294298654/1151524597305458779/333606286b1d906a.webp',
+    '소바': 'https://cdn.discordapp.com/attachments/836864790294298654/1151524597636812871/390c48c3cfddfc58.webp',
+    '하버': 'https://cdn.discordapp.com/attachments/836864790294298654/1151524597896851476/7988afbae00a7b1f.webp',
+    '스카이': 'https://cdn.discordapp.com/attachments/836864790294298654/1151524598186262609/69dd50118c7354c8.webp',
+    '브림스톤': 'https://cdn.discordapp.com/attachments/836864790294298654/1151524598832189471/2e362286ac3952d2.webp',
+    '요루': 'https://cdn.discordapp.com/attachments/836864790294298654/1151524653026787351/f746ede4314f4e84.webp',
+    '브리치': 'https://cdn.discordapp.com/attachments/836864790294298654/1151524653366530162/b37ad4fe4695abfb.webp',
+    '오멘': 'https://cdn.discordapp.com/attachments/836864790294298654/1151524653613977690/4e2a62e511740603.webp',
+    '킬조이': 'https://cdn.discordapp.com/attachments/836864790294298654/1151524653836288050/e16220cd6824e395.webp',
+    '데드록': 'https://cdn.discordapp.com/attachments/836864790294298654/1151524654062784575/5980119f0638cff2.webp',
+    '페이드': 'https://cdn.discordapp.com/attachments/836864790294298654/1151524654297649243/b0f2edff78116985.webp',
+    '체임버': 'https://cdn.discordapp.com/attachments/836864790294298654/1151524654532542605/64002411139f5914.webp',
+    '네온': 'https://cdn.discordapp.com/attachments/836864790294298654/1151524654859702403/493b642b412f7901.webp',
+    '레이나': 'https://cdn.discordapp.com/attachments/836864790294298654/1151524655090372729/a7575105067c6108.webp',
+    '레이즈': 'https://cdn.discordapp.com/attachments/836864790294298654/1151524655329460356/2468c6d67e4f820c.webp',
+    '제트': 'https://cdn.discordapp.com/attachments/836864790294298654/1151524666016546826/1fc7dd19ab9a4889.webp',
+    '피닉스': 'https://cdn.discordapp.com/attachments/836864790294298654/1151524666746343524/586749533bb4a6ae.webp',
+}
+agentcategory = {
+    '척후대': '케이오/게코/소바/스카이/브리치/페이드'.split('/'),
+    '타격대': '요루/네온/레이나/레이즈/제트/피닉스'.split('/'),
+    '감시자': '사이퍼/세이지/킬조이/데드록/체임버'.split('/'),
+    '전략가': '아스트라/바이퍼/하버/브림스톤/오멘'.split('/')
+}
+agentcategoryimgs = {
+    '척후대': 'https://cdn.discordapp.com/emojis/1151527934734114867.webp',
+    '타격대': 'https://cdn.discordapp.com/emojis/1151527979646713918.webp',
+    '감시자': 'https://cdn.discordapp.com/emojis/1151527983039910008.webp',
+    '전략가': 'https://cdn.discordapp.com/emojis/1151527985170612264.webp'
+}
 
 @bot.event
 async def on_ready():
+    global roleemojis
     print('ready')
     await bot.change_presence(status=discord.Status.online, activity=discord.Game('Valorant Helper Running'))
+
+class AgentCategoryView(discord.ui.View):
+    def __init__(self, ctx):
+        super().__init__()
+        self.ctx = ctx
+        self.start = [i for i in self.children if i.label == '뽑기'][0]
+        self.role_buttons = [i for i in self.children if i.row == 0]
+        self.roles = [True, True, True, True] # 척후대, 타격대, 감시자, 전략가
+    
+    async def check(self, interaction):
+        if self.roles == [False, False, False, False]:
+            if not self.start.disabled:
+                self.start.disabled = True
+        else:
+            if self.start.disabled:
+                self.start.disabled = False
+        await interaction.response.edit_message(view=self)
+    
+    async def change_label(self, button, role):
+        button.label = button.label[:-2] + ('추가' if self.roles[role] else '제거')
+        button.style = discord.ButtonStyle.green if self.roles[role] else discord.ButtonStyle.danger
+        self.roles[role] = not self.roles[role]
+        
+    @discord.ui.button(label='척후대 제거', style=discord.ButtonStyle.danger, emoji=roleemojis[0], row=0)
+    async def initiators(self, button, interaction):
+        await self.change_label(button, 0)
+        await self.check(interaction)
+    
+    @discord.ui.button(label='타격대 제거', style=discord.ButtonStyle.danger, emoji=roleemojis[1], row=0)
+    async def duelists(self, button, interaction):
+        await self.change_label(button, 1)
+        await self.check(interaction)
+    
+    @discord.ui.button(label='감시자 제거', style=discord.ButtonStyle.danger, emoji=roleemojis[2], row=0)
+    async def sentinels(self, button, interaction):
+        await self.change_label(button, 2)
+        await self.check(interaction)
+    
+    @discord.ui.button(label='전략가 제거', style=discord.ButtonStyle.danger, emoji=roleemojis[3], row=0)
+    async def controllers(self, button, interaction):
+        await self.change_label(button, 3)
+        await self.check(interaction)
+    
+    @discord.ui.button(label='전체 추가', style=discord.ButtonStyle.green, row=1)
+    async def add_entire(self, button, interaction):
+        for i in range(4):
+            self.role_buttons[i].label = self.role_buttons[i].label[:-2] + '제거'
+            self.role_buttons[i].style = discord.ButtonStyle.danger
+        self.roles = [True, True, True, True]
+        await self.check(interaction)
+    
+    @discord.ui.button(label='전체 제거', style=discord.ButtonStyle.danger, row=1)
+    async def remove_entire(self, button, interaction):
+        for i in range(4):
+            self.role_buttons[i].label = self.role_buttons[i].label[:-2] + '추가'
+            self.role_buttons[i].style = discord.ButtonStyle.green
+        self.roles = [False, False, False, False]
+        await self.check(interaction)
+    
+    @discord.ui.button(label='뽑기', row=1, style=discord.ButtonStyle.blurple)
+    async def choice(self, button, interaction):
+        agents = []
+        if self.roles[0]:
+            agents.extend(agentcategory['척후대'])
+        if self.roles[1]:
+            agents.extend(agentcategory['타격대'])
+        if self.roles[2]:
+            agents.extend(agentcategory['감시자'])
+        if self.roles[3]:
+            agents.extend(agentcategory['전략가'])
+        agent = random.choice(agents)
+        category = [i for i in agentcategory.keys() if agent in agentcategory[i]][0]
+        embed = discord.Embed(title='요원 뽑기 결과', description='**' + agent + '**', color=0x00ffff, timestamp=datetime.datetime.now())
+        embed.set_author(name=category, icon_url=agentcategoryimgs[category])
+        embed.set_image(url=agentimgs[agent])
+        await interaction.message.edit(embed=embed, view=None)
+
+@bot.slash_command(name='요원뽑기')
+async def choiceAgent(ctx: discord.ApplicationContext):
+    await ctx.respond(view=AgentCategoryView(ctx))
+
+mapsgroup = bot.create_group('맵', '맵 뽑기 관련 명령어')
+maps = '스플릿/바인드/헤이븐/어센트/아이스박스/브리즈/프랙처/펄/로터스/선셋'.split('/')
 
 @mapsgroup.command(name='뽑기')
 async def randommap(ctx: discord.ApplicationContext):
@@ -137,8 +261,7 @@ class GunCategoryView(discord.ui.View):
         embed = discord.Embed(title='총 뽑기 결과', description='**' + gun + '**', color=0x00ffff, timestamp=datetime.datetime.now())
         embed.set_image(url=gunimgs[gun])
         await interaction.message.edit(embed=embed, view=None)
-        
-        
+
 @bot.slash_command(name='총뽑기')
 async def choiceGun(ctx: discord.ApplicationContext):
     await ctx.respond(view=GunCategoryView(ctx))
@@ -197,5 +320,6 @@ async def evalfn(ctx: discord.ApplicationContext):
     modal = CodeModal(title='Code')
     modal.setctx(ctx)
     await ctx.send_modal(modal)
+
 
 bot.run(open('token.txt').read())
