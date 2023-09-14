@@ -160,7 +160,7 @@ class AgentCategoryView(discord.ui.View):
         agent = random.choice(agents)
         category = [i for i in agentcategory.keys() if agent in agentcategory[i]][0]
         embed = discord.Embed(title='요원 뽑기 결과', description='**' + agent + '**', color=0x00ffff, timestamp=datetime.datetime.now())
-        embed.set_author(name=category, icon_url=agentcategoryimgs[category])
+        embed.set_thumbnail(url=agentcategoryimgs[category])
         embed.set_image(url=agentimgs[agent])
         await interaction.message.edit(embed=embed, view=None)
 
