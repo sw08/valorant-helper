@@ -403,6 +403,8 @@ async def evalfn(ctx: discord.ApplicationContext):
 
 @bot.event
 async def on_voice_state_update(member, before, after):
+    if before.channel == after.channel and before.channel is not None:
+        return
     if before.channel is not None:
         if len(before.channel.members) == 0 and before.channel.name.startswith("게임-"):
             await before.channel.delete()
