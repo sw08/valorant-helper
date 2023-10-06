@@ -8,66 +8,66 @@ from discord.commands import Option
 bot = discord.Bot(intents=discord.Intents.all(), owner_id=1015942852582326292)
 
 roleemojis = [
-    "<:initiator:1151527934734114867>",  # 척후대
-    "<:duelist:1151527979646713918>",  # 타격대
-    "<:sentinel:1151527983039910008>",  # 감시자
-    "<:controller:1151527985170612264>",  # 전략가
+    "<:initiator:1159498006039629894>",  # 척후대
+    "<:duelist:1159498003418206278>",  # 타격대
+    "<:sentinel:1159498007591538688>",  # 감시자
+    "<:controller:1159498001891467364>",  # 전략가
 ]
 mapimgs = {
-    "로터스": "https://cdn.discordapp.com/attachments/836864790294298654/1147845536309846106/687ccd6f515be17b.webp",
-    "바인드": "https://cdn.discordapp.com/attachments/836864790294298654/1147845536553107467/56c737a20d17c431.webp",
-    "브리즈": "https://cdn.discordapp.com/attachments/836864790294298654/1147845537186463824/9ae19cd9a8edddb5.webp",
-    "선셋": "https://cdn.discordapp.com/attachments/836864790294298654/1147845537559748618/aacb1f965cc25b25.webp",
-    "스플릿": "https://cdn.discordapp.com/attachments/836864790294298654/1147845537987559494/a6f62ed9370596da.webp",
-    "아이스박스": "https://cdn.discordapp.com/attachments/836864790294298654/1147845538423775302/b2da601a1fe7b605.webp",
-    "어센트": "https://cdn.discordapp.com/attachments/836864790294298654/1147845538700591174/1aa4b547bc441703.webp",
-    "펄": "https://cdn.discordapp.com/attachments/836864790294298654/1147845539367501884/1da2274df9d8ee91.webp",
-    "프랙처": "https://cdn.discordapp.com/attachments/836864790294298654/1147845539891781763/793aad2477894df4.webp",
-    "헤이븐": "https://cdn.discordapp.com/attachments/836864790294298654/1147845540336369684/60f40e9053aa8904.webp",
+    "로터스": "https://cdn.discordapp.com/attachments/1159496780136849472/1159499423710195752/687ccd6f515be17b.webp",
+    "바인드": "https://cdn.discordapp.com/attachments/1159496780136849472/1159499428881776762/56c737a20d17c431.webp",
+    "브리즈": "https://cdn.discordapp.com/attachments/1159496780136849472/1159499433789112340/9ae19cd9a8edddb5.webp",
+    "선셋": "https://cdn.discordapp.com/attachments/1159496780136849472/1159499441213022348/aacb1f965cc25b25.webp",
+    "스플릿": "https://cdn.discordapp.com/attachments/1159496780136849472/1159499447613542480/a6f62ed9370596da.webp",
+    "아이스박스": "https://cdn.discordapp.com/attachments/1159496780136849472/1159499452910940290/b2da601a1fe7b605.webp",
+    "어센트": "https://cdn.discordapp.com/attachments/1159496780136849472/1159499460712353902/1aa4b547bc441703.webp",
+    "펄": "https://cdn.discordapp.com/attachments/1159496780136849472/1159499469021257859/1da2274df9d8ee91.webp",
+    "프랙처": "https://cdn.discordapp.com/attachments/1159496780136849472/1159499473773404220/793aad2477894df4.webp",
+    "헤이븐": "https://media.discordapp.net/attachments/1159496780136849472/1159499479536369754/60f40e9053aa8904.webp",
 }
 gunimgs = {
-    "오딘": "https://cdn.discordapp.com/attachments/836864790294298654/1150064025556754544/f40f9f4cfb6ba714.webp",
-    "아레스": "https://cdn.discordapp.com/attachments/836864790294298654/1150064025879724062/444f0fd3628b093b.webp",
-    "오퍼레이터": "https://cdn.discordapp.com/attachments/836864790294298654/1150064026122977393/202698ea90306ecf.webp",
-    "마샬": "https://cdn.discordapp.com/attachments/836864790294298654/1150064026378838026/94eeec87dd1a4f96.webp",
-    "팬텀": "https://cdn.discordapp.com/attachments/836864790294298654/1150064026647281674/1eb1c69368ca75f0.webp",
-    "밴달": "https://cdn.discordapp.com/attachments/836864790294298654/1150064026966032454/bf3d6bc12ab1631e.webp",
-    "가디언": "https://cdn.discordapp.com/attachments/836864790294298654/1150064027205116037/ac6b950adce7b907.webp",
-    "불독": "https://cdn.discordapp.com/attachments/836864790294298654/1150064027528085677/4ae45b6079a661bf.webp",
-    "저지": "https://cdn.discordapp.com/attachments/836864790294298654/1150064027767144509/a056f63266d7e815.webp",
-    "버키": "https://cdn.discordapp.com/attachments/836864790294298654/1150064027985256589/9540a32b0fd8ae8d.webp",
-    "스펙터": "https://cdn.discordapp.com/attachments/836864790294298654/1150064090056761404/fef2c503f13e2303.webp",
-    "스팅어": "https://cdn.discordapp.com/attachments/836864790294298654/1150064090589450320/3f45d7b4e40c5d44.webp",
-    "셰리프": "https://cdn.discordapp.com/attachments/836864790294298654/1150064091151466636/6cf27cb5c0170958.webp",
-    "고스트": "https://cdn.discordapp.com/attachments/836864790294298654/1150064091470241922/227d305cf85a0186.webp",
-    "프렌지": "https://cdn.discordapp.com/attachments/836864790294298654/1150064091830943744/ffccf92973e1cf3a.webp",
-    "쇼티": "https://cdn.discordapp.com/attachments/836864790294298654/1150064092170690580/5dd5806631cf8670.webp",
-    "클래식": "https://cdn.discordapp.com/attachments/836864790294298654/1150064092464304188/593b7f4f53d2d82c.webp",
-    "칼": "https://cdn.discordapp.com/attachments/836864790294298654/1150064092728533012/4f75a4d3e1026449.webp",
+    "오딘": "https://cdn.discordapp.com/attachments/1159496780136849472/1159496895526346855/f40f9f4cfb6ba714.webp",
+    "아레스": "https://cdn.discordapp.com/attachments/1159496780136849472/1159496899011813486/444f0fd3628b093b.webp",
+    "오퍼레이터": "https://cdn.discordapp.com/attachments/1159496780136849472/1159496900832149614/202698ea90306ecf.webp",
+    "마샬": "https://cdn.discordapp.com/attachments/1159496780136849472/1159496902862180412/94eeec87dd1a4f96.webp",
+    "팬텀": "https://cdn.discordapp.com/attachments/1159496780136849472/1159496904590245970/1eb1c69368ca75f0.webp",
+    "밴달": "https://cdn.discordapp.com/attachments/1159496780136849472/1159496906356031488/bf3d6bc12ab1631e.webp",
+    "가디언": "https://cdn.discordapp.com/attachments/1159496780136849472/1159496908365123604/ac6b950adce7b907.webp",
+    "불독": "https://cdn.discordapp.com/attachments/1159496780136849472/1159496927004606515/4ae45b6079a661bf.webp",
+    "저지": "https://cdn.discordapp.com/attachments/1159496780136849472/1159496928644575353/a056f63266d7e815.webp",
+    "버키": "https://cdn.discordapp.com/attachments/1159496780136849472/1159496930389405716/9540a32b0fd8ae8d.webp",
+    "스펙터": "https://cdn.discordapp.com/attachments/1159496780136849472/1159496860092862474/fef2c503f13e2303.webp",
+    "스팅어": "https://cdn.discordapp.com/attachments/1159496780136849472/1159496862252945428/3f45d7b4e40c5d44.webp",
+    "셰리프": "https://cdn.discordapp.com/attachments/1159496780136849472/1159496864119398521/6cf27cb5c0170958.webp",
+    "고스트": "https://cdn.discordapp.com/attachments/1159496780136849472/1159496866065567786/227d305cf85a0186.webp",
+    "프렌지": "https://cdn.discordapp.com/attachments/1159496780136849472/1159496867760054313/ffccf92973e1cf3a.webp",
+    "쇼티": "https://cdn.discordapp.com/attachments/1159496780136849472/1159496869400035460/5dd5806631cf8670.webp",
+    "클래식": "https://cdn.discordapp.com/attachments/1159496780136849472/1159496871484600361/593b7f4f53d2d82c.webp",
+    "칼": "https://cdn.discordapp.com/attachments/1159496780136849472/1159496891709526036/4f75a4d3e1026449.webp",
 }
 agentimgs = {
-    "아스트라": "https://cdn.discordapp.com/attachments/836864790294298654/1151524595795513445/db3c9d9b11664522.webp",
-    "바이퍼": "https://cdn.discordapp.com/attachments/836864790294298654/1151524596168798208/059836713363a75b.webp",
-    "케이오": "https://cdn.discordapp.com/attachments/836864790294298654/1151524596470792222/c8bc0291dfff8843.webp",
-    "사이퍼": "https://cdn.discordapp.com/attachments/836864790294298654/1151524596756008970/8ac03789c94bd388.webp",
-    "게코": "https://cdn.discordapp.com/attachments/836864790294298654/1151524597045407754/5cf9a40477fdef2e.webp",
-    "세이지": "https://cdn.discordapp.com/attachments/836864790294298654/1151524597305458779/333606286b1d906a.webp",
-    "소바": "https://cdn.discordapp.com/attachments/836864790294298654/1151524597636812871/390c48c3cfddfc58.webp",
-    "하버": "https://cdn.discordapp.com/attachments/836864790294298654/1151524597896851476/7988afbae00a7b1f.webp",
-    "스카이": "https://cdn.discordapp.com/attachments/836864790294298654/1151524598186262609/69dd50118c7354c8.webp",
-    "브림스톤": "https://cdn.discordapp.com/attachments/836864790294298654/1151524598832189471/2e362286ac3952d2.webp",
-    "요루": "https://cdn.discordapp.com/attachments/836864790294298654/1151524653026787351/f746ede4314f4e84.webp",
-    "브리치": "https://cdn.discordapp.com/attachments/836864790294298654/1151524653366530162/b37ad4fe4695abfb.webp",
-    "오멘": "https://cdn.discordapp.com/attachments/836864790294298654/1151524653613977690/4e2a62e511740603.webp",
-    "킬조이": "https://cdn.discordapp.com/attachments/836864790294298654/1151524653836288050/e16220cd6824e395.webp",
-    "데드록": "https://cdn.discordapp.com/attachments/836864790294298654/1151524654062784575/5980119f0638cff2.webp",
-    "페이드": "https://cdn.discordapp.com/attachments/836864790294298654/1151524654297649243/b0f2edff78116985.webp",
-    "체임버": "https://cdn.discordapp.com/attachments/836864790294298654/1151524654532542605/64002411139f5914.webp",
-    "네온": "https://cdn.discordapp.com/attachments/836864790294298654/1151524654859702403/493b642b412f7901.webp",
-    "레이나": "https://cdn.discordapp.com/attachments/836864790294298654/1151524655090372729/a7575105067c6108.webp",
-    "레이즈": "https://cdn.discordapp.com/attachments/836864790294298654/1151524655329460356/2468c6d67e4f820c.webp",
-    "제트": "https://cdn.discordapp.com/attachments/836864790294298654/1151524666016546826/1fc7dd19ab9a4889.webp",
-    "피닉스": "https://cdn.discordapp.com/attachments/836864790294298654/1151524666746343524/586749533bb4a6ae.webp",
+    "아스트라": "https://cdn.discordapp.com/attachments/1159496780136849472/1159496933493198958/db3c9d9b11664522.webp",
+    "바이퍼": "https://cdn.discordapp.com/attachments/1159496780136849472/1159496935460306985/059836713363a75b.webp=",
+    "케이오": "https://cdn.discordapp.com/attachments/1159496780136849472/1159496937704280194/c8bc0291dfff8843.webp",
+    "사이퍼": "https://cdn.discordapp.com/attachments/1159496780136849472/1159496940300546150/8ac03789c94bd388.webp",
+    "게코": "https://cdn.discordapp.com/attachments/1159496780136849472/1159496941953101894/5cf9a40477fdef2e.webp",
+    "세이지": "https://cdn.discordapp.com/attachments/1159496780136849472/1159496962102546492/333606286b1d906a.webp",
+    "소바": "https://cdn.discordapp.com/attachments/1159496780136849472/1159496966720458812/390c48c3cfddfc58.webp",
+    "하버": "https://cdn.discordapp.com/attachments/1159496780136849472/1159496972445691954/7988afbae00a7b1f.webp",
+    "스카이": "https://cdn.discordapp.com/attachments/1159496780136849472/1159496977898278912/69dd50118c7354c8.webp",
+    "브림스톤": "https://cdn.discordapp.com/attachments/1159496780136849472/1159496981803188326/2e362286ac3952d2.webp",
+    "요루": "https://cdn.discordapp.com/attachments/1159496780136849472/1159496987654226051/f746ede4314f4e84.webp",
+    "브리치": "https://cdn.discordapp.com/attachments/1159496780136849472/1159496992511242460/b37ad4fe4695abfb.webp",
+    "오멘": "https://cdn.discordapp.com/attachments/1159496780136849472/1159496997867376702/4e2a62e511740603.webp",
+    "킬조이": "https://cdn.discordapp.com/attachments/1159496780136849472/1159497005098340413/e16220cd6824e395.webp",
+    "데드록": "https://cdn.discordapp.com/attachments/1159496780136849472/1159497009351381082/5980119f0638cff2.webp",
+    "페이드": "https://cdn.discordapp.com/attachments/1159496780136849472/1159497017140187217/b0f2edff78116985.webp",
+    "체임버": "https://cdn.discordapp.com/attachments/1159496780136849472/1159497023494553710/64002411139f5914.webp",
+    "네온": "https://cdn.discordapp.com/attachments/1159496780136849472/1159497028989100134/493b642b412f7901.webp",
+    "레이나": "https://cdn.discordapp.com/attachments/1159496780136849472/1159497033749639258/a7575105067c6108.webp",
+    "레이즈": "https://cdn.discordapp.com/attachments/1159496780136849472/1159497039244177418/2468c6d67e4f820c.webp",
+    "제트": "https://cdn.discordapp.com/attachments/1159496780136849472/1159497044822589490/1fc7dd19ab9a4889.webp",
+    "피닉스": "https://cdn.discordapp.com/attachments/1159496780136849472/1159497049763479632/586749533bb4a6ae.webp",
 }
 agentcategory = {
     "척후대": "케이오/게코/소바/스카이/브리치/페이드".split("/"),
@@ -76,10 +76,10 @@ agentcategory = {
     "전략가": "아스트라/바이퍼/하버/브림스톤/오멘".split("/"),
 }
 agentcategoryimgs = {
-    "척후대": "https://cdn.discordapp.com/emojis/1151527934734114867.webp",
-    "타격대": "https://cdn.discordapp.com/emojis/1151527979646713918.webp",
-    "감시자": "https://cdn.discordapp.com/emojis/1151527983039910008.webp",
-    "전략가": "https://cdn.discordapp.com/emojis/1151527985170612264.webp",
+    "척후대": "https://cdn.discordapp.com/emojis/1159498006039629894.webp",
+    "타격대": "https://cdn.discordapp.com/emojis/1159498003418206278.webp",
+    "감시자": "https://cdn.discordapp.com/emojis/1159498007591538688.webp",
+    "전략가": "https://cdn.discordapp.com/emojis/1159498001891467364.webp",
 }
 
 
@@ -407,7 +407,7 @@ async def on_voice_state_update(member, before, after):
         if len(before.channel.members) == 0 and before.channel.name.startswith("게임-"):
             await before.channel.delete()
     if after.channel is not None:
-        if after.channel.name == "게임":
+        if after.channel.id == 1159491194292801607:
             channel = await bot.get_channel(1159479936634064989).create_voice_channel(
                 "게임-" + member.name
             )
