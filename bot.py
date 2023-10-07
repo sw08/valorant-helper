@@ -406,7 +406,10 @@ async def on_voice_state_update(member, before, after):
     if before.channel == after.channel and before.channel is not None:
         return
     if before.channel is not None:
-        if len(before.channel.members) == 0 and before.channel.name.startswith("게임-"):
+        if len(before.channel.members) == 0 and (
+            before.channel.name.startswith("게임-")
+            or before.channel.name.startswith("노래방-")
+        ):
             await before.channel.delete()
     if after.channel is not None:
         if after.channel.id == 1159491194292801607:
@@ -414,6 +417,10 @@ async def on_voice_state_update(member, before, after):
                 "게임-" + member.name
             )
             await member.move_to(channel)
+        elif after.channel.id == 1159504725314633859:
+            channel = await bot.get_channel(1159495333219401850).create_voice_channel(
+                "노래방-" + member.name
+            )
 
 
 bot.run(open("token.txt").read())
