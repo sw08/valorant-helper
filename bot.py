@@ -421,6 +421,7 @@ async def on_voice_state_update(member, before, after):
             channel = await bot.get_channel(1159495333219401850).create_voice_channel(
                 "노래방-" + member.name
             )
+            await member.move_to(channel)
 
 
 bot.run(open("token.txt").read())
