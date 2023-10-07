@@ -410,7 +410,7 @@ async def on_voice_state_update(member, before, after):
             await before.channel.delete()
     if after.channel is not None:
         if after.channel.id == 1159491194292801607:
-            channel = await bot.get_channel(1159479936634064989).create_voice_channel(
+            channel = await bot.get_channel(1159495333219401850).create_voice_channel(
                 "게임-" + member.name
             )
             await member.move_to(channel)
